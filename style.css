@@ -67,3 +67,8 @@ body{
     font-size:0.9rem;
     padding:2px 6px;
 }
+
+.completed {
+    text-decoration: line-through;
+    color: gray;
+  }

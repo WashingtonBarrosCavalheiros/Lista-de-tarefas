@@ -44,6 +44,11 @@ function addItem() {
     delete_item.classList.add('delete', 'btn', 'btn-danger');
     delete_item.innerHTML = '<i class="fa fa-trash"></i>'; // ícone dentro do botão
 
+    const complete_item = document.createElement('button');
+    complete_item.innerHTML = "✔";
+    complete_item.classList.add('btn', 'btn-success');
+
+    item_action.appendChild(complete_item);
     item_action.appendChild(edit_item);
     item_action.appendChild(delete_item);
 
@@ -52,6 +57,11 @@ function addItem() {
     toDoContainer.appendChild(item);
 
     input.value = '';
+
+     // Evento para completar
+     complete_item.addEventListener('click', (e) => {
+        input_item.classList.toggle("completed");
+      });
 
     // Evento para editar
     edit_item.addEventListener('click', (e) => {
@@ -69,7 +79,27 @@ function addItem() {
     delete_item.addEventListener('click', (e) => {
         toDoContainer.removeChild(item);
     });
+ 
 }
+
+// Função de Filtro
+const filtro = document.getElementById('filtro');
+filtro.addEventListener('change', () => {
+  const valorFiltro = filtro.value;
+  const tarefas = document.querySelectorAll('.todo-item'); 
+
+  tarefas.forEach(tarefa => {
+    const input = tarefa.querySelector('input');
+
+    if (valorFiltro === 'todos') {
+      tarefa.style.display = 'flex';
+    } else if (valorFiltro === 'concluidos') {
+      tarefa.style.display = input.classList.contains('completed') ? 'flex' : 'none';
+    } else if (valorFiltro === 'pendentes') {
+      tarefa.style.display = !input.classList.contains('completed') ? 'flex' : 'none';
+    }
+  });
+});
 
 // função de pesquisa ao digitar
 searchField.addEventListener('input', function() {
